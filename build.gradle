@@ -4,7 +4,7 @@ plugins {
     id 'maven-publish'
 }
 
-version = '0.6.1'
+version = '0.6.2'
 group = 'io.github.CDAGaming'
 description = 'Connect locally to the Discord client using IPC for a subset of RPC features like Rich Presence and Activity Join/Spectate'
 archivesBaseName = 'DiscordIPC'
