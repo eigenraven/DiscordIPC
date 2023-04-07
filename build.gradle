@@ -2,10 +2,9 @@ plugins {
     id 'java'
     id 'signing'
     id 'maven-publish'
-    id 'com.github.johnrengelman.shadow' version '8.1.1'
 }
 
-version = '0.6.0'
+version = '0.6.1'
 group = 'io.github.CDAGaming'
 description = 'Connect locally to the Discord client using IPC for a subset of RPC features like Rich Presence and Activity Join/Spectate'
 archivesBaseName = 'DiscordIPC'
@@ -13,33 +12,21 @@ archivesBaseName = 'DiscordIPC'
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
 
-configurations {
-    shadeOnly
-    shade
-    implementation.extendsFrom shade
-}
-
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    shade group: 'com.google.code.gson', name: 'gson', version: '2.8.0'
-    shade group: 'org.slf4j', name: 'slf4j-api', version: '1.7.36'
-    shade group: 'com.kohlschutter.junixsocket', name: 'junixsocket-common', version: '2.4.0'
-    shade group: 'com.kohlschutter.junixsocket', name: 'junixsocket-native-common', version: '2.4.0'
+    implementation group: 'com.google.code.gson', name: 'gson', version: '2.8.0'
+    implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.36'
+    implementation group: 'com.kohlschutter.junixsocket', name: 'junixsocket-common', version: '2.4.0'
+    implementation group: 'com.kohlschutter.junixsocket', name: 'junixsocket-native-common', version: '2.4.0'
 }
 
 jar.manifest.mainAttributes([
         'Implementation-Title'  : project.name,
         'Implementation-Version': project.version
 ])
-
-shadowJar {
-    configurations = [project.configurations.shade, project.configurations.shadeOnly]
-    archiveClassifier.set('')
-    exclude 'META-INF/versions/**'
-}
 
 tasks.register('javadocJar', Jar) {
     dependsOn javadoc
@@ -69,7 +56,7 @@ assemble.dependsOn javadocJar, sourcesJar
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            artifact shadowJar
+            artifact jar
             artifact javadocJar
             artifact sourcesJar
 
