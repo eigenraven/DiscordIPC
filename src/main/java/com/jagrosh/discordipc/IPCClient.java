@@ -623,6 +623,7 @@ public final class IPCClient implements Closeable {
                 IPCClient.this.readPipe(localInstance);
             }
         }, "IPCClient-Reader");
+        readThread.setDaemon(true);
 
         if (debugMode) {
             getCurrentLogger(LOGGER).info("[DEBUG] Starting IPCClient reading thread!");
